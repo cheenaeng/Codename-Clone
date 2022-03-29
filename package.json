@@ -1,0 +1,35 @@
+{
+  "name": "Project3-CODENAMES",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --config webpack_conf/webpack.prod.js",
+    "debug": "nodemon --inspect index.mjs",
+    "start": "node index.mjs",
+    "watch": "webpack --watch --config webpack_conf/webpack.dev.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.17.8",
+    "@babel/preset-env": "^7.16.11",
+    "babel-loader": "^8.2.4",
+    "css-loader": "^6.7.1",
+    "mini-css-extract-plugin": "^2.6.0",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.70.0",
+    "webpack-cli": "^4.9.2"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.6",
+    "core-js": "^3.21.1",
+    "express": "^4.17.3",
+    "html-webpack-plugin": "^5.5.0",
+    "method-override": "^3.0.0",
+    "node-sass": "^7.0.1",
+    "pg": "^8.7.3",
+    "sass-loader": "^12.6.0"
+  }
+}
