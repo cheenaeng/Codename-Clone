@@ -1,0 +1,325 @@
+@import url("https://fonts.googleapis.com/css2?family=Bangers&family=Black+Ops+One&family=Montserrat:wght@100;500;700&family=Oswald:wght@200;500;700&family=Quicksand:wght@300;500;700&family=Roboto:ital,wght@0,400;0,700;0,900;1,500&display=swap");
+
+@import url("https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap");
+
+body {
+  background-image: url("http://localhost:3004/images/red-bg-1.jpg");
+}
+
+header {
+  margin: 20vh auto 5vh;
+  text-transform: uppercase;
+  font-size: 8em;
+  font-weight: 700;
+  color: #f5f5f5;
+  font-family: "Black Ops One";
+  text-shadow: 1px 1px 1px #919191, 1px 2px 1px #919191, 1px 3px 1px #919191,
+    1px 4px 1px #919191, 1px 5px 1px #919191, 1px 6px 1px #919191,
+    1px 7px 1px #919191, 1px 8px 1px #919191, 1px 9px 1px #919191,
+    1px 10px 1px #919191, 1px 18px 6px rgba(16, 16, 16, 0.4),
+    1px 22px 10px rgba(16, 16, 16, 0.2), 1px 25px 35px rgba(16, 16, 16, 0.2),
+    1px 30px 60px rgba(16, 16, 16, 0.4);
+}
+
+.smaller-heading {
+  font-size: 5em;
+  font-weight: 700;
+  color: #f5f5f5;
+  font-family: "Black Ops One";
+  text-shadow: 1px 1px 1px #919191, 1px 2px 1px #919191, 1px 3px 1px #919191,
+    1px 4px 1px #919191, 1px 5px 1px #919191, 1px 6px 1px #919191,
+    1px 7px 1px #919191, 1px 8px 1px #919191, 1px 9px 1px #919191,
+    1px 10px 1px #919191, 1px 18px 6px rgba(16, 16, 16, 0.4),
+    1px 22px 10px rgba(16, 16, 16, 0.2), 1px 25px 35px rgba(16, 16, 16, 0.2),
+    1px 30px 60px rgba(16, 16, 16, 0.4);
+}
+
+.hide {
+  display: none !important;
+}
+
+header > h1 {
+  font-family: "Black Ops One";
+  font-size: 15vh;
+}
+
+.choose-username-wrapper {
+  gap: 3vh;
+}
+.room-code-information p {
+  font-family: play;
+  font-weight: 700;
+  font-size: 1.5em;
+  text-align: center;
+}
+/* LOBBY BUTTONS*/
+
+.start-play-btn,
+#submit-host,
+#submit-players-number,
+#submit-room-number,
+#choose-username-btn,
+#submit-gameuser-btn,
+#guesses-submit {
+  background-image: linear-gradient(#ffc527, #ffdd7f);
+  padding: 2vh;
+  text-transform: uppercase;
+  border-radius: 20px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  box-sizing: border-box;
+  color: #fe5400;
+  cursor: pointer;
+  font-family: play;
+  font-size: 1.8em;
+  font-weight: 900;
+  margin: 5px;
+  padding: 10px 15px;
+  text-align: center;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  text-shadow: 0 -1px 1px rgba(7, 51, 34, 0.8);
+}
+
+#guesses-submit {
+  width: 16vh;
+  font-size: 0.7em;
+  padding: 1vh;
+  text-shadow: none;
+}
+
+#submit-host,
+#submit-players-number,
+#submit-room-number,
+#choose-username-btn,
+#submit-gameuser-btn {
+  width: 20vh;
+}
+
+.start-play-btn:hover,
+#submit-host:hover,
+#submit-players-number:hover,
+#submit-room-number:hover,
+#choose-username-btn:hover,
+#submit-gameuser-btn:hover {
+  background-image: linear-gradient(#ff5a0a, #ff915a);
+  color: #fff;
+}
+
+.join-room-input input {
+  padding: 1.5vh;
+  width: 28vh;
+  border-radius: 20px;
+  color: #fe5400;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px,
+    rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+  font-family: play;
+  font-weight: 700;
+  font-size: 1.2em;
+  text-align: center;
+  margin: 2vh;
+}
+
+.room-label {
+  font-family: "Black Ops One";
+  font-size: 1.5em;
+  text-transform: uppercase;
+}
+
+/*CHOOSE TEAM-ROLE*/
+.radioEl {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.radioEl + img,
+.radioEl + .role-choose-lobby {
+  cursor: pointer;
+}
+
+.radioEl + img {
+  border-radius: 5px;
+  width: 100%;
+  display: block;
+  height: auto;
+  width: 70vh;
+}
+
+.role-choose-lobby {
+  width: 42vh;
+  background-color: rgb(22, 22, 22);
+  font-family: "Black Ops One";
+  color: #f1f1f1;
+  font-size: 3vh;
+  text-align: center;
+  padding: 8vh;
+  height: 20vh;
+  border-radius: 10px;
+}
+
+.radioEl + img:active,
+.radioEl + img:hover,
+.radioEl:checked + img,
+.radioEl:checked + .role-choose-lobby {
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+.image-radio {
+  position: relative;
+  width: 50%;
+  max-width: 80vh;
+}
+
+.overlay {
+  font-family: "Black Ops One";
+  position: absolute;
+  bottom: 0;
+  background: rgb(0, 0, 0);
+  background: rgba(0, 0, 0, 0.5); /* Black see-through */
+  color: #f1f1f1;
+  width: 100%;
+  transition: 0.5s ease;
+  opacity: 0;
+  color: white;
+  font-size: 20px;
+  padding: 20px;
+  text-align: center;
+}
+
+.image-radio:hover .overlay,
+.radioEl:checked + img + .overlay {
+  opacity: 1;
+}
+
+// .team-label p {
+//   font-family: "Black Ops One";
+//   font-size: 1.5em;
+//   color: rgb(23, 22, 22);
+//   -webkit-text-stroke-color: white;
+//   text-align: center;
+// }
+
+.choose-role-team {
+  font-family: "Black Ops One";
+  font-size: 2.2em;
+}
+
+#announcement-icon {
+  color: #ffdd7f;
+  font-size: 2em;
+}
+
+.update-message {
+  text-align: center;
+  font-size: 0.8em;
+  font-weight: 700;
+  font-family: play;
+  margin-top: 1vh;
+}
+
+.col {
+  background-image: url("http://localhost:3004/images/cardtemplate.png");
+  background-size: 15vh 10vh;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  padding: 5vh;
+  -webkit-filter: drop-shadow(0px 2px 0px rgba(244, 247, 249, 1));
+  filter: drop-shadow(0px 2px 0px rgba(244, 247, 249, 1));
+  width: 20vh;
+}
+
+.col:hover {
+  transform: scale(1.2);
+}
+
+.red {
+  background-image: url("http://localhost:3004/images/red2.png");
+  background-size: 15vh 10vh;
+  background-repeat: no-repeat;
+  display: block;
+}
+
+.red-profile-pic,
+.blue-profile-pic {
+  background-image: url("http://localhost:3004/images/red1.png");
+  background-size: 20vh 13vh;
+  width: 20vh;
+  padding: 7.5vh;
+  border-radius: 10px;
+  background-repeat: no-repeat;
+}
+
+.blue {
+  background-size: 15vh 10vh;
+  background-repeat: no-repeat;
+  background-image: url("http://localhost:3004/images/blue1.png");
+  display: block;
+}
+.blue-profile-pic {
+  background-image: url("http://localhost:3004/images/blue2.png");
+}
+
+.bomb {
+  background-image: url("http://localhost:3004/images/spy.jpeg");
+}
+
+.neutral {
+  background-image: url("http://localhost:3004/images/neutral1.png");
+}
+
+#universal-game-board > .gameboard-container {
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+    rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+  padding: 2vh;
+}
+
+.card-btn-main {
+  max-width: 20vh;
+  margin: 1vh auto;
+  text-align: center;
+  text-transform: capitalize;
+  font-family: "Black Ops One";
+  font-size: 1.5vh;
+  white-space: nowrap;
+}
+
+.current-team-wrapper {
+  padding: 1vh 2vh;
+  border-radius: 10px;
+  font-family: play;
+  font-size: 1.2em;
+  font-weight: 700;
+  // box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset,
+  //   rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+}
+
+.redTeamColumn,
+.blueTeamColumn {
+  width: 20vh;
+  margin: 2vh;
+}
+
+.small-revealed-board {
+  width: 13vh;
+}
+
+.small-revealed-board .col {
+  padding: 1vh;
+  background-size: 3vh 2vh;
+  margin: auto;
+}
+.small-revealed-board .gameboard-container {
+  gap: 1.8em;
+}
+
+#guesses-input {
+  border-radius: 10px;
+  padding: 1vh 2vh;
+  width: 10vh;
+}
