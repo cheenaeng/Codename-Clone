@@ -1,8 +1,11 @@
 import pkg from 'word-pictionary-list';
 const {randomPictionaryWords} = pkg;
 
-
+let newGameScore = [0,0]
+let tempCorrectAns =0 
 let newArrOfWords =[]
+let inputGuess
+
 const shuffleWords = (allWords)=>{
     //generate a random number from 0-24
     console.log(allWords.length,"words length")
@@ -39,7 +42,9 @@ const generateInitialGameState = ()=>{
 const generateCards = () =>{
   newArrOfWords =[]
   //need 25 random nouns/verbs/adjectives 
-  const randomWords= pkg(25)
+  // const randomWords= pkg(25)
+  const randomWords = ['book','tree','paper','boat','prison','hospital','chef','sad', 'black', 'hat', 'socks', 'camel','fairy', 'netflix', 'berlin', 'america', 'casino', 'rich', 'war', 'late', 'water', 'sea', 'bed', 'cake', 'Mr Potato Head']
+  
   console.log(randomWords, "random words")
   const startingTeamWords = randomWords.slice(0,9)
   const secondTeamWords = randomWords.slice(9, 17)
@@ -71,7 +76,7 @@ export default function initGameController(db) {
        gamestate: intialGamestate, 
        cards: cardsList,
      })
-
+    response.cookie('gameId', game.id)
      response.send({game})
     }
     catch(error){
@@ -96,19 +101,35 @@ export default function initGameController(db) {
     }
   };  
 
-  // const checkGameCards = async (request,response) =>{
+  const findSingleGame = async (request,response) =>{
+    try {
+      //need to decide which team to start first, 0 for red team, 1 for blue team 
+  
+     const game = await db.Game.findOne({
+      where:{
+        id: request.cookies.gameId
+      }
+     })
+
+     response.send({game})
+    }
+    catch(error){
+      console.log(error)
+    }
+  };  
+
+  //  const updateScore = async (request,response) =>{
   //   try {
-  //    //check card that is sent via request.body --> does it belong to red team or blue team 
+  //     const data = request.body
+  //     console.log(data)
+  //     const cardToCheckIndex = data.cardValue
+  //     //now to identify the card 
 
-  //    //this gives the card id 
-  //    const cardToCheckIndex = request.body.card
-  //    //now to identify the card 
-
-  //    const game = await db.Game.findOne({
-  //     where:{
-  //       id: request.params.id 
-  //     }
-  //    })
+  //     const game = await db.Game.findOne({
+  //       where:{
+  //         id: data.gameId
+  //       }
+  //     })
 
   //     const cardIdentity =  game.cards.allWords[cardToCheckIndex]
   //     const cardsCategories = game.cards
@@ -122,48 +143,89 @@ export default function initGameController(db) {
   //         }
   //       })
   //     }
-
-  //     //1. need to check which is the starting team and who is the second, check starting team color, else is second 
+ 
   //     const colorOfStartingTeam = game.gamestate.startingTeam
   //     let secondTeamColor 
   //     colorOfStartingTeam === 'blue'? secondTeamColor = 'red' : secondTeamColor = 'blue'
-  //     console.log(secondTeamColor)
-  //     //check the word, which team it belongs to. if word belongs to starting team AND if current team === starting team, add points to the team does it belongs to.
+      
+      
+  //     let currentTeamColor
+  //     inputGuess = parseInt(data.guessValue)
+      
 
-  //     //if current team is the starting team 
   //     if (game.gamestate.currentTeam === colorOfStartingTeam ){
   //       if (cardCategory === 'startingTeam'){
-  //         game.gamestate.gameScore[0]+=1 
+  //         newGameScore[0]+=1 
+  //         currentTeamColor = colorOfStartingTeam
+  //         tempCorrectAns +=1 
+  //         if (inputGuess === tempCorrectAns){
+  //           currentTeamColor = secondTeamColor
+  //           tempCorrectAns =0 
+  //         }
+    
   //       }
   //       if (cardCategory === 'secondTeam'){
-  //         game.gamestate.gameScore[1] +=1 
-  //         game.gamestate.currentTeam = secondTeamColor
+  //         newGameScore[1] +=1 
+  //         currentTeamColor = secondTeamColor
+  //         tempCorrectAns =0 
   //       }
   //       if (cardCategory === 'neutral'){
-  //         game.gamestate.currentTeam = secondTeamColor
+  //         currentTeamColor = secondTeamColor
+  //         tempCorrectAns =0 
   //       }
+     
   //     } 
+  
   //     //if current team is the secondTeam 
-  //     if ( game.gamestate.currentTeam === secondTeamColor){
-  //       if (cardCategory === 'secondTeam'){
-  //         game.gamestate.gameScore[1]+=1 
+  //     else{
+
+  //       if (game.gamestate.currentTeam === secondTeamColor){
+
+  //         if (cardCategory === 'secondTeam'){
+  //           newGameScore[1]+=1 
+  //           currentTeamColor = secondTeamColor
+  //           tempCorrectAns +=1 
+        
+  //           if (inputGuess === tempCorrectAns){
+  //               currentTeamColor = colorOfStartingTeam
+  //               tempCorrectAns =0 
+  //               }
+  //         }
+
+  //         if (cardCategory === 'startingTeam'){
+  //           newGameScore[0]+=1 
+  //           currentTeamColor = colorOfStartingTeam
+  //           tempCorrectAns =0 
+  //         }
+
+  //         if (cardCategory === 'neutral'){
+  //           currentTeamColor = colorOfStartingTeam
+  //           tempCorrectAns =0 
+  //         }
+    
   //       }
-  //       if (cardCategory === 'startingTeam'){
-  //         game.gamestate.gameScore[0] +=1 
-  //         game.gamestate.currentTeam = colorOfStartingTeam
-  //       }
-  //       if (cardCategory === 'neutral'){
-  //         game.gamestate.currentTeam = colorOfStartingTeam
-  //       }
+
   //     }
+      
+  //     console.log('1'+game.gamestate.currentTeam,colorOfStartingTeam,secondTeamColor)
+  //     console.log('2'+'currenteamcolor', currentTeamColor)
+
+     
 
   //     //need to update current team and teamscore 
   //     const updatedGameState = {
   //       startingTeam : colorOfStartingTeam, 
-  //       currentTeam: game.gamestate.currentTeam, 
-  //       gameScore : game.gamestate.gameScore
-  //     }
+  //       currentTeam: currentTeamColor,
+  //       gameScore : newGameScore, 
+  //       cardValueClicked: data.cardValue,
+  //       secondTeam: secondTeamColor, 
+  //       cardCategoryClicked : cardCategory, 
+  //       cardAnswer: cardIdentity,
+  //       previousTeam: data.currentTeam
 
+  //     }
+  //     console.log(tempCorrectAns,inputGuess)
+     
 
   //     const updatedGame = await db.Game.update(
   //       {
@@ -171,24 +233,18 @@ export default function initGameController(db) {
   //       },
   //       { 
   //         where:{
-  //           id: request.params.id 
+  //           id: data.gameId
   //         }
   //       })
-      
-  //     console.log(updatedGame)
-  //     const result = {
-  //       cardCategory : cardCategory, 
-  //       updatedGameStatus: updatedGameState, 
-  //       cardAnswer: cardIdentity
-  //     }
+    
+  //    response.send({updatedGameState})
+  
 
-  //    response.send({result})
   //   }
   //   catch(error){
   //     console.log(error)
   //   }
   // };  
-  
 
  return {
    findGame,createGame

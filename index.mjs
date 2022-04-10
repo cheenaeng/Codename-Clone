@@ -127,30 +127,22 @@ io.on('connection', (socket) => {
 
     })
 
-    socket.on('showCards',(gameData)=>{
+    socket.on('updateGameState',(gameData)=>{
     
     const socketCardController = initSocketCardController(db,gameData,currentGuessValue,tempCorrectAns,addedBonus)
     const gameInfo = socketCardController.checkGameCards()
         .then(gameResult=>{
-            console.log(gameData.roomId,'rrrrroooom')
-            //if guess is correct, add to the temporary counter, if false, default to zero 
-            addedBonus = gameResult.updatedBonus
             currentGuessValue = gameResult.updatedInputGuess
             tempCorrectAns = gameResult.updatedTempScore 
 
-            console.log(tempCorrectAns, currentGuessValue,"points")
-
-            
-            io.in(`${gameData.roomId}`).emit('reveal',gameResult)
+            io.in(`${gameData.roomId}`).emit('updatedResult',gameResult)
         })
         
     })
 
     socket.on('receiveGuess', (...dataReceived)=>{
         console.log(dataReceived)
-        //know guess result and room id and
-
-        //this is the first index
+     
         currentGuessValue = dataReceived[0]
         const numberOfGuess= currentGuessValue
         io.in(`${dataReceived[1].roomId}`).emit('showGuess',numberOfGuess,dataReceived[1])

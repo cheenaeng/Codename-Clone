@@ -46,7 +46,9 @@ header > h1 {
 .choose-username-wrapper {
   gap: 3vh;
 }
+
 .room-code-information p {
+  color: #f1f1f1;
   font-family: play;
   font-weight: 700;
   font-size: 1.5em;
@@ -79,13 +81,14 @@ header > h1 {
   -webkit-user-select: none;
   touch-action: manipulation;
   text-shadow: 0 -1px 1px rgba(7, 51, 34, 0.8);
+  white-space: normal !important;
+  word-wrap: break-word;
 }
 
 #guesses-submit {
-  width: 16vh;
   font-size: 0.7em;
-  padding: 1vh;
   text-shadow: none;
+  padding: 0.6vh 1vh;
 }
 
 #submit-host,
@@ -93,7 +96,7 @@ header > h1 {
 #submit-room-number,
 #choose-username-btn,
 #submit-gameuser-btn {
-  width: 20vh;
+  width: 22vh;
 }
 
 .start-play-btn:hover,
@@ -101,9 +104,15 @@ header > h1 {
 #submit-players-number:hover,
 #submit-room-number:hover,
 #choose-username-btn:hover,
-#submit-gameuser-btn:hover {
+#submit-gameuser-btn:hover,
+#guesses-submit:hover {
   background-image: linear-gradient(#ff5a0a, #ff915a);
   color: #fff;
+}
+
+#submit-gameuser-btn:disabled,
+#submit-gameuser-btn:disabled:hover {
+  color: #fe55006a;
 }
 
 .join-room-input input {
@@ -168,6 +177,10 @@ header > h1 {
     rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
+.radioEl:checked + .role-choose-lobby {
+  border: 2px solid #ffc527;
+}
+
 .image-radio {
   position: relative;
   width: 50%;
@@ -195,14 +208,6 @@ header > h1 {
   opacity: 1;
 }
 
-// .team-label p {
-//   font-family: "Black Ops One";
-//   font-size: 1.5em;
-//   color: rgb(23, 22, 22);
-//   -webkit-text-stroke-color: white;
-//   text-align: center;
-// }
-
 .choose-role-team {
   font-family: "Black Ops One";
   font-size: 2.2em;
@@ -223,7 +228,7 @@ header > h1 {
 
 .col {
   background-image: url("http://localhost:3004/images/cardtemplate.png");
-  background-size: 15vh 10vh;
+  background-size: 18vh 11vh;
   background-repeat: no-repeat;
   border: none;
   cursor: pointer;
@@ -231,6 +236,8 @@ header > h1 {
   -webkit-filter: drop-shadow(0px 2px 0px rgba(244, 247, 249, 1));
   filter: drop-shadow(0px 2px 0px rgba(244, 247, 249, 1));
   width: 20vh;
+  display: flex;
+  justify-content: center;
 }
 
 .col:hover {
@@ -239,7 +246,6 @@ header > h1 {
 
 .red {
   background-image: url("http://localhost:3004/images/red2.png");
-  background-size: 15vh 10vh;
   background-repeat: no-repeat;
   display: block;
 }
@@ -255,7 +261,6 @@ header > h1 {
 }
 
 .blue {
-  background-size: 15vh 10vh;
   background-repeat: no-repeat;
   background-image: url("http://localhost:3004/images/blue1.png");
   display: block;
@@ -281,7 +286,6 @@ header > h1 {
 
 .card-btn-main {
   max-width: 20vh;
-  margin: 1vh auto;
   text-align: center;
   text-transform: capitalize;
   font-family: "Black Ops One";
@@ -295,10 +299,17 @@ header > h1 {
   font-family: play;
   font-size: 1.2em;
   font-weight: 700;
-  // box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset,
-  //   rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+  color: whitesmoke;
 }
-
+.show-current-team {
+  background-color: #f1f1f1;
+  width: 17vh;
+  color: black;
+  padding: 0.5vh 1vh;
+  border-radius: 5px;
+  border: 2px solid black;
+  text-transform: capitalize;
+}
 .redTeamColumn,
 .blueTeamColumn {
   width: 20vh;
@@ -320,6 +331,119 @@ header > h1 {
 
 #guesses-input {
   border-radius: 10px;
+  padding: 0.5vh;
+  width: 15vh;
+  color: #fe5400;
+  text-align: center;
+  margin-left: 0.5vw;
+}
+
+#guess-label,
+#guess-output,
+#show-guess {
+  font-size: 1em;
+  font-family: play;
+  font-weight: 700;
+  color: white;
+}
+
+.show-role-wrapper {
+  background-color: #212020;
+  color: white;
+  font-size: 1em;
+  font-family: play;
+  font-weight: 700;
   padding: 1vh 2vh;
-  width: 10vh;
+  border-radius: 14px;
+  text-transform: uppercase;
+}
+
+.container-overlay {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.message-users-joined {
+  text-align: center;
+  color: #ffc527;
+  font-family: "Play";
+  text-transform: capitalize;
+  font-size: 1.5em;
+  font-weight: 700;
+}
+
+.update-message {
+  font-size: 1em;
+  text-transform: uppercase;
+  color: whitesmoke;
+}
+
+.starting-team {
+  font-family: "Black Ops One";
+  font-size: 1.2em;
+  color: black;
+}
+
+.if-starting-team-red,
+.if-starting-team-blue {
+  font-size: 1.2em;
+  font-family: "Play";
+  font-weight: 700;
+  background-color: #be3b15;
+  color: white;
+  text-align: center;
+  padding: 0.5vh;
+  border-radius: 4px;
+}
+
+.if-starting-team-blue {
+  background-color: #0357af;
+}
+
+.number-of-guesses-field,
+.current-score-field {
+  font-family: "Play";
+  font-size: 1.2em;
+  font-weight: 700;
+  color: whitesmoke;
+}
+
+.guess-with-role-wrapper {
+  padding: 1vh 2vh;
+}
+
+.container {
+  position: relative;
+}
+
+.modal-winning-message {
+  position: absolute;
+  left: 33%;
+  top: 50%;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  z-index: 1;
+  font-family: "Play";
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 3vh;
+  border-radius: 1vh;
+  font-size: 1.5em;
+  text-align: center;
+}
+
+.show-guess {
+  text-align: center;
+  font-size: 1.2em;
+  color: white;
+  margin-left: 0.5vh;
+}
+
+.waiting-message {
+  font-size: 1em;
+  color: white;
+  font-family: play;
+  font-weight: 700;
+  text-align: center;
 }

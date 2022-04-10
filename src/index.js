@@ -1,16 +1,59 @@
 import './styles.scss';
 import { io } from "socket.io-client";
 import axios from 'axios';
-import e from 'cors';
+
 
 const socket = io.connect()
+
+/* -------------------------------------------------------------------------- */
+/*                              DOM MANIPULATIONS                              */
+/* -------------------------------------------------------------------------- */
+
+//DOM MANIPULATION 
+const currentTeamTurnDiv = document.querySelector('.show-current-team')
+const roomBtn = document.querySelector('.room-btn')
+const submitRoomCodeBtn = document.querySelector('#submit-room-number')
+const submitGameUserDetailsBtn = document.querySelector('#submit-gameuser-btn')
+const guessSubmitBtn = document.querySelector('#guesses-submit')
+const submitHostBtn = document.querySelector('#submit-host')
+const usernameBtn = document.querySelector('#choose-username-btn')
+const joinRoomBtn = document.querySelector('.join-room-btn')
+
+let spyColor
+let tempGuessValue =0
+
+
+//to manipulate
+
+/* --------------------- LOBBY AREA ELEMENTS AND LOG IN --------------------- */
+const playersFieldEl = document.querySelector('.players-input')
+const hostUserNameEl = document.querySelector('.host-user')
+const submitPlayersBtn = document.querySelector('#submit-players-number')
+const lobbyDiv = document.querySelector('.lobby-wrapper')
+const mainHeader =document.querySelector('.game-load')
+const enterRoomCodeEl = document.querySelector('.room-code-input')
+const guestUsernameWrapper = document.querySelector('.choose-username-wrapper')
+
+
+/* ----------------------------- MAIN GAMEBOARD ----------------------------- */
+const mainGameBoard = document.querySelector('.main-gamedashboard')
+const spyBoardContainer = document.querySelector('.small-revealed-board .gameboard-container')
+const guessinputFieldEl = document.querySelector('#guesses-input')
+const gameBoardContainerEl = document.querySelector('#universal-game-board .gameboard-container')
+const guessFieldEl = document.querySelector('.guesses-field')
+const mainGameBoardColsEl =document.querySelectorAll('#universal-game-board .col')
+const redGameScore = document.querySelector('.red-team-score')
+const blueGameScore = document.querySelector('.blue-team-score')
+
+const winningMessage = document.querySelector('.winner-message')
+const winningModal = document.querySelector('.modal-winning-message')
+
 /* -------------------------------------------------------------------------- */
 /*                              HELPER FUNCTIONS                              */
 /* -------------------------------------------------------------------------- */
 
 
 const assignTeamClass = (command,element,startingColor,secondColor)=>{
-  element.firstElementChild.innerHTML=""
   switch(command){
     case 'startingTeam':
       element.classList.add(`${startingColor}`)
@@ -31,37 +74,37 @@ const assignTeamClass = (command,element,startingColor,secondColor)=>{
   }
 }
 
-/* -------------------------------------------------------------------------- */
-/*                               MAIN FUNCTIONS                               */
-/* -------------------------------------------------------------------------- */
+const assignGameScore = () =>{
+  console.log('scoressss', redScore, blueScore)
+  console.log(document.querySelectorAll('#universal-game-board .red'))
+  console.log(document.querySelectorAll('#universal-game-board .blue'))
+  const redScore = document.querySelectorAll('#universal-game-board .red').length
+  const blueScore = document.querySelectorAll('#universal-game-board .blue').length
+  redGameScore.innerHTML = redScore
+  blueGameScore.innerHTML = blueScore
 
-//DOM MANIPULATION 
-const currentTeamTurnDiv = document.querySelector('.show-current-team')
-const roomBtn = document.querySelector('.room-btn')
-const submitRoomCodeBtn = document.querySelector('#submit-room-number')
-const submitGameUserDetailsBtn = document.querySelector('#submit-gameuser-btn')
-const guessSubmitBtn = document.querySelector('#guesses-submit')
-const submitHostBtn = document.querySelector('#submit-host')
-const usernameBtn = document.querySelector('#choose-username-btn')
-const joinRoomBtn = document.querySelector('.join-room-btn')
+  return [redScore,blueScore]
 
-let spyColor
+}
 
-//to manipulate
+const checkForWinningCondition = (gameData)=>{
+  const gameResult = assignGameScore()
+  if (gameData.cardCategory==="bomb"){
+    winningModal.classList.remove('hide')
+    winningMessage.innerHTML = `${gameData.updatedGameStatus.currentTeam} team wins the game!`
+  }
+  if (gameData.startingTeam === 'red' && gameResult[0] ===9 || gameData.startingTeam ==='blue' && gameResult[1] === 9){
+     winningModal.classList.remove('hide')
+     winningMessage.innerHTML = `${gameData.startingTeam} team wins the game!`
+    
+  }
+  if (gameData.secondTeam === 'red' && gameResult[0] ===8 || gameData.secondTeam ==='blue' && gameResult[1] === 8){
+     winningModal.classList.remove('hide')
+     winningMessage.innerHTML = `${gameData.secondTeam} team wins the game!`
+    
+  }
 
-/* --------------------- LOBBY AREA ELEMENTS AND LOG IN --------------------- */
-const playersFieldEl = document.querySelector('.players-input')
-const hostUserNameEl = document.querySelector('.host-user')
-const submitPlayersBtn = document.querySelector('#submit-players-number')
-const lobbyDiv = document.querySelector('.lobby-wrapper')
-const mainHeader =document.querySelector('.game-load')
-const enterRoomCodeEl = document.querySelector('.room-code-input')
-const guestUsernameWrapper = document.querySelector('.choose-username-wrapper')
-
-
-/* ----------------------------- MAIN GAMEBOARD ----------------------------- */
-const mainGameBoard = document.querySelector('.main-gamedashboard')
-const gameBoardContainer = document.querySelector('.dashboard-container')
+}
 
 /* -------------------------------------------------------------------------- */
 /*                  TO CREATE ROOM AND JOIN PLAYERS TO ROOM                  */
@@ -143,12 +186,12 @@ const showLobbyArea = (room)=>{
         let checkTeamSelected = document.querySelector('input[name="team"]:checked')?.value;
           const isRedSpyAval = data.teamChosen.redSpy 
           const isBlueSpyAval = data.teamChosen.blueSpy 
-          console.log(isBlueSpyAval)
-          console.log(checkTeamSelected)
+          document.querySelector('input[value="spy"]').disabled = false 
 
           //if player chooses red or blue and spy role already taken 
           if (isRedSpyAval && checkTeamSelected ==="red" && isBlueSpyAval && checkTeamSelected==="blue"){
             document.querySelector('input[value="spy"]').disabled = true 
+
           }
 
           if (isRedSpyAval && checkTeamSelected ==="red"){
@@ -170,7 +213,6 @@ const showLobbyArea = (room)=>{
             }
 
             else {
-              spyMessageDiv.innerHTML = 'Spy role available'
               document.querySelector('input[value="spy"]').disabled = false 
               document.querySelector('input[value="non-spy"]').disabled = false 
             }
@@ -197,7 +239,7 @@ const createGameUser = (userData) =>{
       const messageDiv = document.querySelector('.message-users-joined')
       messageDiv.innerHTML=""
       console.log(args)
-      messageDiv.innerHTML=`${args[0]} have joined the room`
+      messageDiv.innerHTML=`${args[0]} has joined the room`
       showLobbyArea(gameuserDetail.roomId)
     })
 
@@ -269,49 +311,52 @@ const checkRoomcode = ()=>{
 
 
 const checkForCurrentTeam = (colorSpy)=>{
-console.log(colorSpy)
- const mainGameBoard =document.querySelectorAll('#universal-game-board .col')
-  socket.on('returnGameStatus', (data)=>{
-    console.log('return current game status')
-    currentTeamTurnDiv.innerHTML = `CURRENT TEAM IS: ${data.gamestate.currentTeam}`
+  socket.emit('findGameStatus')
+  socket.on('returnGameStatus', data=>{
+    console.log('currentTeam'+ data)
+    currentTeamTurnDiv.innerHTML = `${data.gamestate.currentTeam}`
+ 
     if (data.gamestate.currentTeam != colorSpy){
       document.querySelector('#guesses-input').disabled = true
-      mainGameBoard.forEach(element=>{
+      gameBoardContainerEl.classList.add('container-overlay')
+      mainGameBoardColsEl.forEach(element=>{
         element.style.pointerEvents = 'none'
       })
     }
     else {
         document.querySelector('#guesses-input').disabled = false
-        mainGameBoard.forEach(element=>{
-        element.style.pointerEvents = 'auto'
-      })
       }
-   })
+    })
+  // checkForWinningCondition(data)
 }
 
-const receiveChangeInCards = ()=>{
-    socket.on('reveal', (data)=>{
-    console.log(data,'data')
-    socket.emit('findGameStatus')
-    const cardElDiv = document.querySelector(`.card-backface-${data.cardValue}`)
-    const cardElDivParent = document.querySelector(`.card-backface-${data.cardValue}`).parentNode
-    console.log(cardElDivParent)
 
-    cardElDiv.innerHTML = data.cardAnswer 
-    assignTeamClass(data.cardCategory,cardElDivParent, data.startingTeam,data.secondTeam)
+const receiveChangeInCards = ()=>{
+    socket.on('updatedResult', (data)=>{
+      console.log(data,'data')
+      const cardElDiv = document.querySelector(`.card-backface-${data.cardValue}`)
+      const cardElDivParent = document.querySelector(`.card-backface-${data.cardValue}`).parentNode
+      console.log(cardElDivParent)
+      cardElDiv.innerHTML = ""
+      assignTeamClass(data.cardCategory,cardElDivParent, data.startingTeam,data.secondTeam)
+      checkForCurrentTeam(spyColor)
+      checkForWinningCondition(data)
   })
 }
 
-const flipCard = (gameDetails)=>{
-  socket.emit('showCards', gameDetails)
 
+const updateGameScore = (cardData) =>{
+  console.log('clicked')
+  socket.emit('updateGameState',cardData)
 }
+
 
 //data here stores the game information 
 const checkUseridentity =(data)=>{
   //to show general information to all 
   mainGameBoard.classList.remove('hide')
-
+  console.log(data)
+  currentTeamTurnDiv.innerHTML = `${data.gamestate.currentTeam}`
   //if starting team is red, to show red start first, else otherwise 
   const ifRedStarts = document.querySelector('.if-starting-team-red')
   const guessOutputRed = document.querySelector('.required-guess-red')
@@ -330,73 +375,51 @@ const checkUseridentity =(data)=>{
     guessOutputBlue.innerHTML = '9'
   }
 
-
+  //for each client to check their user identity 
   axios.get('/gameuserIdentity')
   .then(response=>{
+    //if user is a field operative, do not show spy board  
     const showTeamDiv = document.querySelector('.show-team')
     let teamOfUser
     console.log(response.data)
     response.data.findGameuser.isRed? teamOfUser = 'red': teamOfUser = 'blue'
-    showTeamDiv.innerHTML = `Team: ${teamOfUser}`
+    showTeamDiv.innerHTML = `${teamOfUser}`
     const mainBoard = document.querySelector('#universal-game-board .gameboard-container')
     mainBoard.classList.remove('hide')
     const showRole = document.querySelector('.show-role')
+
+    //to assign cards to each board 
+    const cardsShuffled = data.cards.allWords
+
+    const boardBox = document.querySelectorAll('.card-btn-main')
+    const spyBoardEl = document.querySelectorAll('.small-revealed-board .card-btn')
+
+    for (let i=0; i<boardBox.length; i+=1){
+      boardBox[i].setAttribute('id',`${i}`)
+      boardBox[i].classList.add(`card-backface-${i}`)
+      spyBoardEl[i].innerHTML = cardsShuffled[i]
+      boardBox[i].innerHTML = cardsShuffled[i]  
+    }
+    //small board for spy master to see the cards 
+    
+    const mainGameBoard =document.querySelectorAll('#universal-game-board .col .card-btn-main')
+
+    //if user is field operative, can only see the main gameboard
     if(!response.data.findGameuser.isSpy){
-      showRole.innerHTML = 'ROLE: FIELD OPERATIVE'
+      showRole.innerHTML = 'FIELD OPERATIVE'
       const allCardsElement = document.querySelectorAll('#universal-game-board .card-btn')
       allCardsElement.forEach(card=> card.innerHTML ="")
-    
+      guessFieldEl.classList.add('hide')
+      spyBoardContainer.classList.add('hide')
     }
     else{
-      showRole.innerHTML = 'ROLE:SPY'
+      showRole.innerHTML = 'SPY'
       response.data.findGameuser.isRed? spyColor= 'red': spyColor= 'blue'
+
       const spyBoard = document.querySelector('.small-revealed-board .gameboard-container')
+      // checkForCurrentTeam(spyColor)
       spyBoard.classList.remove('hide')
-      console.log(spyBoard)
 
-      //to assign cards to each board 
-      const cardsShuffled = data.cards.allWords
-      console.log(cardsShuffled)
-      const boardBox = document.querySelectorAll('.card-btn-main')
-      const spyBoardEl = document.querySelectorAll('.small-revealed-board .card-btn')
-  
-      console.log(spyBoardEl)
-      console.log(boardBox)
-
-      for (let i=0; i<boardBox.length; i+=1){
-        boardBox[i].setAttribute('id',`${i}`)
-        boardBox[i].classList.add(`card-backface-${i}`)
-        spyBoardEl[i].innerHTML = cardsShuffled[i]
-        boardBox[i].innerHTML = cardsShuffled[i]  
-      }
-      //small board for spy master to see the cards 
-      
-      const mainGameBoard =document.querySelectorAll('#universal-game-board .col .card-btn-main')
-
-      mainGameBoard.forEach(card=> {
-        console.log(card)
-        card.addEventListener('click', (e)=>{
-          console.log(e.target)  
-          const getCardValue = e.target.id
-          const cardValueCheck = {
-            card: parseInt(getCardValue)
-          }
-          let secondTeam;
-          data.gamestate.startingTeam === 'blue'? secondTeam='red':secondTeam ='blue'
-
-          const gameData = {
-            gameId: data.id, 
-            cardValue: cardValueCheck.card, 
-            startingTeamColor: data.gamestate.startingTeam, 
-            secondTeamColor: secondTeam, cardValueCheck, 
-            roomId: data.roomId,
-          }
-          //spy will trigger this event
-          flipCard(gameData)
-          //everytime click the div to check whether spycolor is same as current team 
-         checkForCurrentTeam(spyColor)
-         })
-      })
 
       //array shows the team each index is associated with 
       const mappingWord = []
@@ -417,7 +440,35 @@ const checkUseridentity =(data)=>{
         const spyBoardElparent = document.querySelectorAll('.small-revealed-board .card-btn')[i].parentNode
         spyBoardEl[i].innerHTML = ""
          assignTeamClass(mappingWord[i],spyBoardElparent,startingTeamColor,secondColorTeam)
-        }
+      }
+
+      //WHEN INDIVIDUAL CARD IS CLICKED ****
+      mainGameBoard.forEach(card=> {
+        card.addEventListener('click', (e)=>{
+          console.log(response.data,"responsedata")
+          console.log(data,"222")
+          const getCardValue = e.target.id
+          const cardValueCheck = {
+            card: parseInt(getCardValue)
+          }
+          let secondTeam;
+          data.gamestate.startingTeam === 'blue'? secondTeam='red':secondTeam ='blue'
+          const gameData = {
+            gameId: data.id, 
+            cardValue: cardValueCheck.card, 
+            startingTeamColor: data.gamestate.startingTeam, 
+            secondTeamColor: secondTeam, cardValueCheck, 
+            roomId: data.roomId,
+            currentTeam: data.gamestate.currentTeam, 
+            guessValue: tempGuessValue,
+            colorSpy: spyColor, 
+            isSpy:response.data.findGameuser.isSpy
+          }
+          //only one person can update the score 
+          updateGameScore(gameData)
+    
+        })
+      })
       checkForCurrentTeam(spyColor)
     }
   })
@@ -426,22 +477,24 @@ const checkUseridentity =(data)=>{
 
 const getGuessValue = ()=>{
   const guessValue = document.querySelector('#guesses-input').value 
-  console.log(guessValue)
+  tempGuessValue = guessValue
   //need  to know who is the current team
   socket.emit('newGame')
   socket.on('returnGame', gameResult=>{
-    console.log('return')
-    console.log(gameResult)
-     socket.emit('receiveGuess', guessValue,gameResult)
-
+    gameBoardContainerEl.classList.remove('container-overlay')
+    socket.emit('receiveGuess', guessValue,gameResult)
+     mainGameBoardColsEl.forEach(element=>{
+      element.style.pointerEvents = 'auto'
+    })
   })
- 
+
+  guessinputFieldEl.innerHTML =""
 }
 
 const showGuessValue = ()=>{
    socket.on('showGuess', (...result)=>{
      const guessMessageDiv = document.querySelector('.show-guess')
-     guessMessageDiv.innerHTML = `Number of guess: ${result[0]}`
+     guessMessageDiv.innerHTML = `${result[0]}`
    })
 }
 
@@ -451,30 +504,24 @@ const showGuessValue = ()=>{
 /* -------------------------------------------------------------------------- */
 
 
+
 const initGame = ()=>{
   const lobbyContainerEl = document.querySelector('.lobby-wrapper')
   lobbyContainerEl.classList.add('hide')
-
-  socket.emit('newGame')
   socket.on('returnGame',(gameData=>{
-    console.log('gamedata', gameData)
+
     checkUseridentity(gameData)
-    console.log(gameData)
+  
   }))
-  receiveChangeInCards()
+
   showGuessValue()
-  socket.emit('findGameStatus')
-  socket.on('returnGameStatus',(result)=>{
-    console.log(result)
-    currentTeamTurnDiv.innerHTML = `${result.gamestate.currentTeam}`
-     
-  })
+  receiveChangeInCards()
 
 }
 
 
-//this is to update game user details when player press the submit button 
-const submitGameDetails = ()=>{
+const submitGameDetails = (e)=>{
+  e.target.disabled = true 
    const checkTeamSelected =document.querySelector('input[name="team"]:checked').value
    const roleSelected = document.querySelector('input[name="role"]:checked').value
   //to update isSpy and isRed column under games_users table 
@@ -491,22 +538,22 @@ const submitGameDetails = ()=>{
 
    axios.put('/roomTeamDetails', userDetailsSelected)
   .then(response=>{
+      const waitingDiv = document.querySelector('.waiting-message')
+      waitingDiv.innerHTML = `Waiting for others to join...`
       console.log(response.data)
       // showLobbyArea(response.data.roomData.roomId)
         //if in the case where exceed  
       socket.emit('findTeam')
       socket.on('startGame', ()=>{
-      initGame(response.data.roomData.id)
+      socket.emit('newGame')
+      initGame()
     })
-  })
+  }) 
 }
 
 /* -------------------------------------------------------------------------- */
 /*                      DOM MANIPULATION TO SHOW AND HIDE                     */
 /* -------------------------------------------------------------------------- */
-
-//1. when click create btn, the number of players div and username field appear and button for create room disappear 
-
 
 
 
@@ -517,3 +564,15 @@ guessSubmitBtn.addEventListener('click', getGuessValue)
 submitHostBtn.addEventListener('click', submitHost)
 usernameBtn.addEventListener('click', enterUsername)
 joinRoomBtn.addEventListener('click', guestJoinRoom)
+
+
+
+//update game state 
+
+
+//user clicks a card, client check what is the cardValue and send to the server and check for identity --> if correct, query database and add 
+
+
+  
+console.log(score,"scoreeee", spyColor,"spyyyyy")
+

@@ -29,6 +29,8 @@ export default function bindRoutes(app) {
   });  
 
   app.get('/gameuserIdentity',GameUserController.checkGameuserIdentity)
+  // app.get('/gameplay',GameController.findSingleGame)
 
   app.get('/gameboard/:id', GameController.findGame)
+  // app.put('/updateGameStatus', GameController.updateScore)
 }

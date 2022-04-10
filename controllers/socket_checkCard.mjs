@@ -1,3 +1,5 @@
+   let newGameScore =[0,0]
+
 export default function  initSocketCardController(db, data,inputGuess,tempCorrectAns,bonus ) {
    const checkGameCards = async () =>{
     try {
@@ -34,8 +36,7 @@ export default function  initSocketCardController(db, data,inputGuess,tempCorrec
       console.log(secondTeamColor)
 
       let currentTeamColor
-      let newGameScore =[]
-
+   
       //check the word, which team it belongs to. if word belongs to starting team AND if current team === starting team, add points to the team does it belongs to.
 
       //if current team is the starting team 
@@ -50,13 +51,13 @@ export default function  initSocketCardController(db, data,inputGuess,tempCorrec
             currentTeamColor = secondTeamColor
             tempCorrectAns =0 
           }
-          if (inputGuess <= tempCorrectAns && bonus){
+          if (inputGuess == tempCorrectAns && bonus){
             inputGuess +=1 
             bonus = false 
           }
         }
         if (cardCategory === 'secondTeam'){
-          game.gamestate.gameScore[1] +=1 
+          newGameScore[1] +=1 
           currentTeamColor = secondTeamColor
           tempCorrectAns =0 
         }
@@ -64,9 +65,13 @@ export default function  initSocketCardController(db, data,inputGuess,tempCorrec
           currentTeamColor = secondTeamColor
           tempCorrectAns =0 
         }
+        if (cardCategory === 'bomb'){
+          currentTeamColor = secondTeamColor
+          tempCorrectAns =0 
+        }
      
-      
       } 
+  
       //if current team is the secondTeam 
       if ( game.gamestate.currentTeam === secondTeamColor){
         if (cardCategory === 'secondTeam'){
@@ -79,7 +84,7 @@ export default function  initSocketCardController(db, data,inputGuess,tempCorrec
               currentTeamColor = colorOfStartingTeam
               tempCorrectAns =0 
              }
-          if (inputGuess <= tempCorrectAns && bonus){
+          if (inputGuess >= tempCorrectAns && bonus){
             console.log(tempCorrectAns,"temppppp", inputGuess)
               inputGuess +=1 
               bonus = false 
@@ -93,6 +98,10 @@ export default function  initSocketCardController(db, data,inputGuess,tempCorrec
         if (cardCategory === 'neutral'){
           currentTeamColor = colorOfStartingTeam
            tempCorrectAns =0 
+        }
+        if (cardCategory === 'bomb'){
+          currentTeamColor = colorOfStartingTeam
+          tempCorrectAns =0 
         }
      
       }
@@ -116,8 +125,8 @@ export default function  initSocketCardController(db, data,inputGuess,tempCorrec
             id: data.gameId
           }
         })
-      
-      console.log(updatedGame)
+
+   
       const result = {
         cardCategory : cardCategory, 
         updatedGameStatus: updatedGameState, 
@@ -127,7 +136,8 @@ export default function  initSocketCardController(db, data,inputGuess,tempCorrec
         secondTeam: secondTeamColor, 
         updatedBonus: bonus, 
         updatedInputGuess: inputGuess, 
-        updatedTempScore: tempCorrectAns
+        updatedTempScore: tempCorrectAns, 
+        previousTeam: game.gamestate.currentTeam
       }
 
      return result 
