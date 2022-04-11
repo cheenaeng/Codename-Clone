@@ -2,12 +2,16 @@
   "name": "Project3-CODENAMES",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": ".eslintrc.js",
   "scripts": {
     "build": "webpack --config webpack_conf/webpack.prod.js",
     "debug": "nodemon --inspect index.mjs",
     "start": "node index.mjs",
     "watch": "webpack --watch --config webpack_conf/webpack.dev.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cheenaeng/Project3-Codenames.git"
   },
   "keywords": [],
   "author": "",
