@@ -10,6 +10,7 @@ import initSocketCardController from './controllers/socket_checkCard.mjs';
 
 import db from './models/index.mjs';
 
+const PORT = process.env.PORT || 3004;
 
 // Initialise Express instance
 const app = express();
@@ -32,7 +33,7 @@ app.use(express.static('dist'));
 // Bind route definitions to the Express application
 bindRoutes(app);
 // Set Express to listen on the given port
-const PORT = process.env.PORT || 3004;
+
 
 const server = createServer(app)
 
