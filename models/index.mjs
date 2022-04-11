@@ -1,5 +1,6 @@
 import sequelizePackage from 'sequelize';
 import allConfig from '../config/config.js';
+import url from 'url';
 
 import initHostModel from './host.mjs';
 import initGameModel from './game.mjs';
