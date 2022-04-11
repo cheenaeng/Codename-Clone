@@ -16,6 +16,7 @@ let sequelize;
 if (env === 'production') {
   // Break apart the Heroku database url and rebuild the configs we need
   const { DATABASE_URL } = process.env;
+  console.log(DATABASE_URL)
   const dbUrl = url.parse(DATABASE_URL);
   const username = dbUrl.auth.substr(0, dbUrl.auth.indexOf(':'));
   const password = dbUrl.auth.substr(
