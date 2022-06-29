@@ -1,9 +1,9 @@
-@import url("https://fonts.googleapis.com/css2?family=Bangers&family=Black+Ops+One&family=Montserrat:wght@100;500;700&family=Oswald:wght@200;500;700&family=Quicksand:wght@300;500;700&family=Roboto:ital,wght@0,400;0,700;0,900;1,500&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Black+Ops+One&family=Montserrat:wght@100;500;700&family=Oswald:wght@200;500;700&family=Quicksand:wght@300;500;700&family=Roboto:ital,wght@0,400;0,700;0,900;1,500&display=swap');
 
-@import url("https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap');
 
 body {
-  background-image: url("http://localhost:3004/images/red-bg-1.jpg");
+  background-image: url('http://localhost:3004/images/red-bg-1.jpg');
 }
 
 header {
@@ -12,7 +12,7 @@ header {
   font-size: 8em;
   font-weight: 700;
   color: #f5f5f5;
-  font-family: "Black Ops One";
+  font-family: 'Black Ops One';
   text-shadow: 1px 1px 1px #919191, 1px 2px 1px #919191, 1px 3px 1px #919191,
     1px 4px 1px #919191, 1px 5px 1px #919191, 1px 6px 1px #919191,
     1px 7px 1px #919191, 1px 8px 1px #919191, 1px 9px 1px #919191,
@@ -25,7 +25,7 @@ header {
   font-size: 5em;
   font-weight: 700;
   color: #f5f5f5;
-  font-family: "Black Ops One";
+  font-family: 'Black Ops One';
   text-shadow: 1px 1px 1px #919191, 1px 2px 1px #919191, 1px 3px 1px #919191,
     1px 4px 1px #919191, 1px 5px 1px #919191, 1px 6px 1px #919191,
     1px 7px 1px #919191, 1px 8px 1px #919191, 1px 9px 1px #919191,
@@ -39,7 +39,7 @@ header {
 }
 
 header > h1 {
-  font-family: "Black Ops One";
+  font-family: 'Black Ops One';
   font-size: 15vh;
 }
 
@@ -130,7 +130,7 @@ header > h1 {
 }
 
 .room-label {
-  font-family: "Black Ops One";
+  font-family: 'Black Ops One';
   font-size: 1.5em;
   text-transform: uppercase;
 }
@@ -159,7 +159,7 @@ header > h1 {
 .role-choose-lobby {
   width: 42vh;
   background-color: rgb(22, 22, 22);
-  font-family: "Black Ops One";
+  font-family: 'Black Ops One';
   color: #f1f1f1;
   font-size: 3vh;
   text-align: center;
@@ -188,7 +188,7 @@ header > h1 {
 }
 
 .overlay {
-  font-family: "Black Ops One";
+  font-family: 'Black Ops One';
   position: absolute;
   bottom: 0;
   background: rgb(0, 0, 0);
@@ -209,7 +209,7 @@ header > h1 {
 }
 
 .choose-role-team {
-  font-family: "Black Ops One";
+  font-family: 'Black Ops One';
   font-size: 2.2em;
 }
 
@@ -227,7 +227,7 @@ header > h1 {
 }
 
 .col {
-  background-image: url("http://localhost:3004/images/cardtemplate.png");
+  background-image: url('http://localhost:3004/images/cardtemplate.png');
   background-size: 18vh 11vh;
   background-repeat: no-repeat;
   border: none;
@@ -245,14 +245,14 @@ header > h1 {
 }
 
 .red {
-  background-image: url("http://localhost:3004/images/red2.png");
+  background-image: url('http://localhost:3004/images/red2.png');
   background-repeat: no-repeat;
   display: block;
 }
 
 .red-profile-pic,
 .blue-profile-pic {
-  background-image: url("http://localhost:3004/images/red1.png");
+  background-image: url('http://localhost:3004/images/red1.png');
   background-size: 20vh 13vh;
   width: 20vh;
   padding: 7.5vh;
@@ -262,19 +262,19 @@ header > h1 {
 
 .blue {
   background-repeat: no-repeat;
-  background-image: url("http://localhost:3004/images/blue1.png");
+  background-image: url('http://localhost:3004/images/blue1.png');
   display: block;
 }
 .blue-profile-pic {
-  background-image: url("http://localhost:3004/images/blue2.png");
+  background-image: url('http://localhost:3004/images/blue2.png');
 }
 
 .bomb {
-  background-image: url("http://localhost:3004/images/spy.jpeg");
+  background-image: url('http://localhost:3004/images/spy.jpeg');
 }
 
 .neutral {
-  background-image: url("http://localhost:3004/images/neutral1.png");
+  background-image: url('http://localhost:3004/images/neutral1.png');
 }
 
 #universal-game-board > .gameboard-container {
@@ -288,7 +288,7 @@ header > h1 {
   max-width: 20vh;
   text-align: center;
   text-transform: capitalize;
-  font-family: "Black Ops One";
+  font-family: 'Black Ops One';
   font-size: 1.5vh;
   white-space: nowrap;
 }
@@ -366,7 +366,7 @@ header > h1 {
 .message-users-joined {
   text-align: center;
   color: #ffc527;
-  font-family: "Play";
+  font-family: 'Play';
   text-transform: capitalize;
   font-size: 1.5em;
   font-weight: 700;
@@ -379,7 +379,7 @@ header > h1 {
 }
 
 .starting-team {
-  font-family: "Black Ops One";
+  font-family: 'Black Ops One';
   font-size: 1.2em;
   color: black;
 }
@@ -387,7 +387,7 @@ header > h1 {
 .if-starting-team-red,
 .if-starting-team-blue {
   font-size: 1.2em;
-  font-family: "Play";
+  font-family: 'Play';
   font-weight: 700;
   background-color: #be3b15;
   color: white;
@@ -402,7 +402,7 @@ header > h1 {
 
 .number-of-guesses-field,
 .current-score-field {
-  font-family: "Play";
+  font-family: 'Play';
   font-size: 1.2em;
   font-weight: 700;
   color: whitesmoke;
@@ -424,7 +424,7 @@ header > h1 {
   flex-direction: column;
   background-color: white;
   z-index: 1;
-  font-family: "Play";
+  font-family: 'Play';
   font-weight: 700;
   text-transform: uppercase;
   padding: 3vh;
