@@ -7,12 +7,12 @@ DEMO: https://lit-atoll-51041.herokuapp.com/
 <h3>Getting Started </h3>
 To get a local copy and run it on your own local host 
 <ol>
-<li> <b>npm install</b> to download the required packages </li>
+<li> <code>npm install</code> to download the required packages </li>
 <li> Change username to your database username under config.sj </li>
-<li> <b>npm run create</b> to create database on your local machine </li>
-<li> <b>npm run migrate</b> to run migration of your database locally </li>
-<li> <b>npm start</b> to start the server </li>
-<li> <b>npm watch</b> to allow webpack to bundle the files </li>
+<li> <code>npm run create</code> to create database on your local machine </li>
+<li> <code>npm run migrate</code> to run migration of your database locally </li>
+<li> <code>npm start</code> to start the server </li>
+<li> <code>npm watch</code> to allow webpack to bundle the files </li>
 </ol>
 
 <h3> Built with </h3>
