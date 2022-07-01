@@ -10,7 +10,7 @@ import initSocketCardController from './controllers/socket_checkCard.mjs';
 
 import db from './models/index.mjs';
 
-const PORT = process.env.PORT || 3004;
+const PORT = process.argv[2] || 3004;
 
 // Initialise Express instance
 const app = express();

@@ -8,7 +8,7 @@ module.exports = {
   output: {
     filename: '[name]-[contenthash].bundle.js',
     path: path.resolve(__dirname, '../dist'),
-    clean: true
+    clean: true,
   },
   plugins: [
     new MiniCssExtractPlugin(),
@@ -22,10 +22,9 @@ module.exports = {
           {
             loader: 'css-loader',
           },
-          'sass-loader'
-          
-          
-        ]
+          'sass-loader',
+
+        ],
       },
     ],
   },
