@@ -7,7 +7,9 @@
     "build": "webpack --config webpack_conf/webpack.prod.js",
     "debug": "nodemon --inspect index.mjs",
     "start": "node index.mjs",
-    "watch": "webpack --watch --config webpack_conf/webpack.dev.js"
+    "watch": "webpack --watch --config webpack_conf/webpack.dev.js",
+    "create": "npx sequelize db:create",
+    "migrate": "npx sequelize db:migrate"
   },
   "repository": {
     "type": "git",
