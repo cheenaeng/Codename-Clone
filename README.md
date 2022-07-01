@@ -22,6 +22,6 @@ Express
 NodeJs 
 
 <h3> Demo Screenshots: </h3>
-![ss1](https://user-images.githubusercontent.com/94110588/176829752-206d9a6b-6544-4a49-ad83-556f69ca8443.png)
-![ss2](https://user-images.githubusercontent.com/94110588/176829776-c32bae63-e2c9-4833-964f-530d687375e1.png)
-![ss3](https://user-images.githubusercontent.com/94110588/176829785-24183ea2-d9aa-4ffd-beb0-991b92767cce.png)
+![Screenshot 2022-07-01 at 1 08 36 PM](https://user-images.githubusercontent.com/94110588/176830175-6df7f7b7-95dc-48d7-a8da-19e51a3e2a95.png)
+![Screenshot 2022-07-01 at 1 09 45 PM](https://user-images.githubusercontent.com/94110588/176830183-ad8a6f9b-e799-4036-82d1-be8504f44cf4.png)
+![Screenshot 2022-07-01 at 1 11 08 PM](https://user-images.githubusercontent.com/94110588/176830192-b744cdcf-7ea1-4ca2-9136-f14e1f57883d.png)
